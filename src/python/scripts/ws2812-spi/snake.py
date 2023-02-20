@@ -3,7 +3,7 @@ import spidev
 import ws2812
 
 
-
+write=ws2812.write2812
 
 
 # def test_off(spi, nLED):
@@ -20,6 +20,8 @@ import ws2812
 import pygame
 import time
 import random
+import keyboard
+
  
 pygame.init()
  
@@ -42,7 +44,7 @@ led_board_indices = [
     40, 41, 42, 43, 44, 45, 46, 47, 48, 49]
 
 def clear_board(spi, nLED=8):
-    write2812(spi, [[0,0,0]]*nLED)
+    write(spi, [[0,0,0]]*nLED)
 
 def draw_board(spi, snake_list, food):
     info_to_write = []
@@ -53,7 +55,7 @@ def draw_board(spi, snake_list, food):
     for coord in snake_list:
         info_to_write[led_board_indices[coord[1] * dis_width + coord[0]]] = white
     
-    write2812(spi, info_to_write)
+    write(spi, info_to_write)
 
 # dis = pygame.display.set_mode((dis_width, dis_height))
 # pygame.display.set_caption('Snake Game by Edureka')
@@ -82,6 +84,29 @@ def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width / 6, dis_height / 3])
  
+
+x1_change = 0
+y1_change = 0
+
+def kbdCallback(e):
+    found = False
+    if e.name == "escape":
+        game_over = True
+    if e.name == "left":
+        x1_change = -snake_block
+        y1_change = 0
+    elif e.name == "right":
+        x1_change = snake_block
+        y1_change = 0
+    elif e.name == "up":
+        y1_change = -snake_block
+        x1_change = 0
+    elif e.name == "down":
+        y1_change = snake_block
+        x1_change = 0
+
+keyboard.on_press(kbdCallback)
+# same as keyboard.on_press_key, but it does this for EVERY key
  
 def gameLoop():
     spi = spidev.SpiDev()
@@ -105,35 +130,10 @@ def gameLoop():
         clear_board(spi, num_led)
 
         while game_close == True:
-            # dis.fill(blue)
-            # message("You Lost! Press C-Play Again or Q-Quit", red)
-            # Your_score(Length_of_snake - 1)
-            # pygame.display.update()
- 
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_q:
-                        game_over = True
-                        game_close = False
-                    if event.key == pygame.K_c:
-                        gameLoop()
- 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if keyboard.is_pressed('q'):
                 game_over = True
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    x1_change = -snake_block
-                    y1_change = 0
-                elif event.key == pygame.K_RIGHT:
-                    x1_change = snake_block
-                    y1_change = 0
-                elif event.key == pygame.K_UP:
-                    y1_change = -snake_block
-                    x1_change = 0
-                elif event.key == pygame.K_DOWN:
-                    y1_change = snake_block
-                    x1_change = 0
+                game_close = False
+                break  # finishing the loop
  
         if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
             game_close = True

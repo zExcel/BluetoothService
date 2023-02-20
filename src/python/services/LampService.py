@@ -18,6 +18,7 @@ import asyncio
 import os
 import subprocess
 
+os.path.realpath(os.path.dirname())
 LAMP_STATUS_EXEC = "/root/workspace/lampAdjustment"
 LAMP_ON = 1
 LAMP_OFF = 0

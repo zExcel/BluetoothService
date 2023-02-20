@@ -1,2 +1,4 @@
 bluez-peripheral
 dbus_next
+pygame
+keyboard

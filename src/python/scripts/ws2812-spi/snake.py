@@ -20,7 +20,21 @@ write=ws2812.write2812
 import pygame
 import time
 import random
-import keyboard
+
+
+import curses
+
+# get the curses screen window
+screen = curses.initscr()
+
+# turn off input echoing
+curses.noecho()
+
+# respond to keys immediately (don't wait for enter)
+curses.cbreak()
+
+# map arrow keys to special values
+screen.keypad(True)
 
  
 pygame.init()
@@ -163,6 +177,28 @@ def gameLoop():
  
         # our_snake(snake_block, snake_List)
         # Your_score(Length_of_snake - 1)
+
+        char = screen.getch()
+        if char == ord('q'):
+            break
+        elif char == curses.KEY_RIGHT:
+            # print doesn't work with curses, use addstr instead
+            screen.addstr(0, 0, 'right')
+            x1_change = snake_block
+            y1_change = 0
+
+        elif char == curses.KEY_LEFT:
+            screen.addstr(0, 0, 'left ')
+            x1_change = -snake_block
+            y1_change = 0
+        elif char == curses.KEY_UP:
+            screen.addstr(0, 0, 'up   ')
+            y1_change = -snake_block
+            x1_change = 0
+        elif char == curses.KEY_DOWN:
+            screen.addstr(0, 0, 'down ')
+            y1_change = snake_block
+            x1_change = 0
 
         draw_board(spi, snake_List, [foodx, foody])
  

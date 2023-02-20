@@ -89,6 +89,7 @@ x1_change = 0
 y1_change = 0
 
 def kbdCallback(e):
+    print(e)
     found = False
     if e.name == "escape":
         game_over = True
@@ -127,6 +128,14 @@ def gameLoop():
     foody = int(round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0)
  
     while not game_over:
+
+        keys = ["left", "a", "b"]
+
+        for key in keys:
+            if keyboard.is_pressed(key):
+                print(keyboard.key_to_scan_codes(key))
+                print(f"{key} pressed")
+
         clear_board(spi, num_led)
 
         while game_close == True:

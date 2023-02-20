@@ -88,18 +88,18 @@ y1_change = 0
 def kbdCallback(e):
     print(e)
     found = False
-    if e.name == "escape":
+    if e== "escape":
         game_over = True
-    if e.name == "left":
+    elif e== "left":
         x1_change = -snake_block
         y1_change = 0
-    elif e.name == "right":
+    elif e== "right":
         x1_change = snake_block
         y1_change = 0
-    elif e.name == "up":
+    elif e== "up":
         y1_change = -snake_block
         x1_change = 0
-    elif e.name == "down":
+    elif e== "down":
         y1_change = snake_block
         x1_change = 0
 

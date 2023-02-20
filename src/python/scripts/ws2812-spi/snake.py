@@ -102,25 +102,25 @@ def message(msg, color):
 x1_change = 0
 y1_change = 0
 
-def kbdCallback(e):
-    print(e)
-    found = False
-    if e.name == "escape":
-        game_over = True
-    if e.name == "left":
-        x1_change = -snake_block
-        y1_change = 0
-    elif e.name == "right":
-        x1_change = snake_block
-        y1_change = 0
-    elif e.name == "up":
-        y1_change = -snake_block
-        x1_change = 0
-    elif e.name == "down":
-        y1_change = snake_block
-        x1_change = 0
+# def kbdCallback(e):
+#     print(e)
+#     found = False
+#     if e.name == "escape":
+#         game_over = True
+#     if e.name == "left":
+#         x1_change = -snake_block
+#         y1_change = 0
+#     elif e.name == "right":
+#         x1_change = snake_block
+#         y1_change = 0
+#     elif e.name == "up":
+#         y1_change = -snake_block
+#         x1_change = 0
+#     elif e.name == "down":
+#         y1_change = snake_block
+#         x1_change = 0
 
-keyboard.on_press(kbdCallback)
+# keyboard.on_press(kbdCallback)
 # same as keyboard.on_press_key, but it does this for EVERY key
  
 def gameLoop():

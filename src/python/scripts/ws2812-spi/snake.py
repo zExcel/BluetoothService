@@ -87,7 +87,7 @@ y1_change = 0
 game_over = False
 
 
-def kbdCallback(e):
+async def kbdCallback(e):
     print(e)
     global x1_change, game_over, y1_change
     if e== "escape":

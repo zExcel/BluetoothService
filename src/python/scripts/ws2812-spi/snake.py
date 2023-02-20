@@ -89,20 +89,21 @@ game_over = False
 
 def kbdCallback(e):
     print(e)
+    global x1_change, game_over, y1_change
     if e== "escape":
-        global game_over = True
+        game_over = True
     elif e== "left":
-        global x1_change = -snake_block
-        global y1_change = 0
+        x1_change = -snake_block
+        y1_change = 0
     elif e== "right":
-        global x1_change = snake_block
-        global y1_change = 0
+        x1_change = snake_block
+        y1_change = 0
     elif e== "up":
-        global y1_change = -snake_block
-        global x1_change = 0
+        y1_change = -snake_block
+        x1_change = 0
     elif e== "down":
-        global y1_change = snake_block
-        global x1_change = 0
+        y1_change = snake_block
+        x1_change = 0
 
 listen_keyboard(on_press=kbdCallback)
 # same as keyboard.on_press_key, but it does this for EVERY key

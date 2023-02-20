@@ -1,6 +1,8 @@
 #!/usr/bin/python
 import spidev
 import ws2812
+import asyncio
+loop = asyncio.get_event_loop()
 
 
 write=ws2812.write2812
@@ -105,7 +107,9 @@ async def kbdCallback(e):
         y1_change = snake_block
         x1_change = 0
 
-listen_keyboard(on_press=kbdCallback)
+
+loop.create_task(listen_keyboard(on_press=kbdCallback))
+# listen_keyboard(on_press=kbdCallback)
 # same as keyboard.on_press_key, but it does this for EVERY key
  
 def gameLoop():

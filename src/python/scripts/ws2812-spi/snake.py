@@ -20,21 +20,7 @@ write=ws2812.write2812
 import pygame
 import time
 import random
-
-
-import curses
-
-# get the curses screen window
-screen = curses.initscr()
-
-# turn off input echoing
-curses.noecho()
-
-# respond to keys immediately (don't wait for enter)
-curses.cbreak()
-
-# map arrow keys to special values
-screen.keypad(True)
+from sshkeyboard import listen_keyboard
 
  
 pygame.init()
@@ -70,9 +56,6 @@ def draw_board(spi, snake_list, food):
         info_to_write[led_board_indices[coord[1] * dis_width + coord[0]]] = white
     
     write(spi, info_to_write)
-
-# dis = pygame.display.set_mode((dis_width, dis_height))
-# pygame.display.set_caption('Snake Game by Edureka')
  
 clock = pygame.time.Clock()
  
@@ -102,25 +85,25 @@ def message(msg, color):
 x1_change = 0
 y1_change = 0
 
-# def kbdCallback(e):
-#     print(e)
-#     found = False
-#     if e.name == "escape":
-#         game_over = True
-#     if e.name == "left":
-#         x1_change = -snake_block
-#         y1_change = 0
-#     elif e.name == "right":
-#         x1_change = snake_block
-#         y1_change = 0
-#     elif e.name == "up":
-#         y1_change = -snake_block
-#         x1_change = 0
-#     elif e.name == "down":
-#         y1_change = snake_block
-#         x1_change = 0
+def kbdCallback(e):
+    print(e)
+    found = False
+    if e.name == "escape":
+        game_over = True
+    if e.name == "left":
+        x1_change = -snake_block
+        y1_change = 0
+    elif e.name == "right":
+        x1_change = snake_block
+        y1_change = 0
+    elif e.name == "up":
+        y1_change = -snake_block
+        x1_change = 0
+    elif e.name == "down":
+        y1_change = snake_block
+        x1_change = 0
 
-# keyboard.on_press(kbdCallback)
+listen_keyboard(on_press=kbdCallback)
 # same as keyboard.on_press_key, but it does this for EVERY key
  
 def gameLoop():
@@ -143,20 +126,13 @@ def gameLoop():
  
     while not game_over:
 
-        keys = ["left", "a", "b"]
-
-        for key in keys:
-            if keyboard.is_pressed(key):
-                print(keyboard.key_to_scan_codes(key))
-                print(f"{key} pressed")
-
         clear_board(spi, num_led)
 
-        while game_close == True:
-            if keyboard.is_pressed('q'):
-                game_over = True
-                game_close = False
-                break  # finishing the loop
+        # while game_close == True:
+        #     if keyboard.is_pressed('q'):
+        #         game_over = True
+        #         game_close = False
+        #         break  # finishing the loop
  
         if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
             game_close = True
@@ -177,28 +153,6 @@ def gameLoop():
  
         # our_snake(snake_block, snake_List)
         # Your_score(Length_of_snake - 1)
-
-        char = screen.getch()
-        if char == ord('q'):
-            break
-        elif char == curses.KEY_RIGHT:
-            # print doesn't work with curses, use addstr instead
-            screen.addstr(0, 0, 'right')
-            x1_change = snake_block
-            y1_change = 0
-
-        elif char == curses.KEY_LEFT:
-            screen.addstr(0, 0, 'left ')
-            x1_change = -snake_block
-            y1_change = 0
-        elif char == curses.KEY_UP:
-            screen.addstr(0, 0, 'up   ')
-            y1_change = -snake_block
-            x1_change = 0
-        elif char == curses.KEY_DOWN:
-            screen.addstr(0, 0, 'down ')
-            y1_change = snake_block
-            x1_change = 0
 
         draw_board(spi, snake_List, [foodx, foody])
  

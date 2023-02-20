@@ -84,24 +84,25 @@ def message(msg, color):
 
 x1_change = 0
 y1_change = 0
+game_over = False
+
 
 def kbdCallback(e):
     print(e)
-    found = False
     if e== "escape":
-        game_over = True
+        global game_over = True
     elif e== "left":
-        x1_change = -snake_block
-        y1_change = 0
+        global x1_change = -snake_block
+        global y1_change = 0
     elif e== "right":
-        x1_change = snake_block
-        y1_change = 0
+        global x1_change = snake_block
+        global y1_change = 0
     elif e== "up":
-        y1_change = -snake_block
-        x1_change = 0
+        global y1_change = -snake_block
+        global x1_change = 0
     elif e== "down":
-        y1_change = snake_block
-        x1_change = 0
+        global y1_change = snake_block
+        global x1_change = 0
 
 listen_keyboard(on_press=kbdCallback)
 # same as keyboard.on_press_key, but it does this for EVERY key
@@ -109,14 +110,9 @@ listen_keyboard(on_press=kbdCallback)
 def gameLoop():
     spi = spidev.SpiDev()
     spi.open(1,1)
-    game_over = False
-    game_close = False
- 
+
     x1 = dis_width // 2
     y1 = dis_height // 2
- 
-    x1_change = 0
-    y1_change = 0
  
     snake_List = []
     Length_of_snake = 1
